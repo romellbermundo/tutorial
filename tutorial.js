@@ -1,32 +1,38 @@
 import rl from "readline-sync";
 let x = 0;
 let y = 0;
-let i = 1;
-let enemy = [1];
-let enemy1 = [{ name: "Birdie", enemyAttack: 7, enemyLife: 100 }];
-let playerAttack = 7;
+let enemyLivingStatus = [1];
+let enemyInfo = [
+  { name: "Rattata", enemyAttack: 7, enemyLife: 100, enemyLivingStatus: 1,},
+];
+let playerAttack = 27;
 while (true) {
-  if (x == 1 && y == 1 && enemy[0] == 1) {
-    console.log(`A wild Caterpie has appeared.`);
-    while (enemy1[0].enemyLife > 0) {
+  if (x == 1 && y == 1 && enemyInfo[0].enemyLivingStatus == 1) {
+    let enemyNum = 0;
+    console.log(`A wild ${enemyInfo[enemyNum].name} has appeared.`);
+    while (enemyInfo[enemyNum].enemyLife > 0) {
       const playerActionBattle = rl.question(undefined, {
         hideEchoBack: true,
         mask: "",
       });
 
-      if (playerActionBattle === "attack" || playerActionBattle === "k") {
-        enemy1[0].enemyLife = enemy1[0].enemyLife - playerAttack;
+      if (playerActionBattle === "k") { // player attacks
+        enemyInfo[enemyNum].enemyLife =
+          enemyInfo[enemyNum].enemyLife - playerAttack;
         console.log(
-          `You have attacked Caterpie for ${enemy1[0].enemyAttack} damage. Caterpie life: ${enemy1[0].enemyLife}`
+          `You have attacked ${enemyInfo[enemyNum].name} for ${playerAttack} damage. ${enemyInfo[enemyNum].name} life: ${enemyInfo[enemyNum].enemyLife}`
         );
       }
-      if (playerActionBattle === "run" || playerActionBattle === "r") {
-          console.log(`You have chosen to run away from Caterpie.`);
-          break
+      if (playerActionBattle === "r") { //player runs
+        console.log(
+          `You have chosen to run away from ${enemyInfo[enemyNum].name}.`
+        );
+        break;
       }
-      if (enemy1[0].enemyLife <= 0) {
-        enemy[0] = enemy[0] - 1;
-        console.log("You have killed a CaterPie.");
+      if (enemyInfo[enemyNum].enemyLife <= 0) {
+        enemyInfo[enemyNum].enemyLivingStatus =
+          enemyInfo[enemyNum].enemyLivingStatus - 1;
+        console.log(`You have killed a ${enemyInfo[enemyNum].name}.`);
       }
     }
   }
