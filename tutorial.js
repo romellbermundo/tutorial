@@ -28,8 +28,8 @@ let enemyInfo = [
   },
   {
     name: "Tutorial Dungeon Master",
-    enemyAttack: 7,
-    enemyLife: 100,
+    enemyAttack: 14,
+    enemyLife: 200,
     enemyLivingStatus: 1,
   },
 ];
@@ -86,10 +86,14 @@ async function welcome() {
   );
 }
 function healingWell() {
-  if (x == 0 && y == -1) {
-    playerInfo[0].playerLife = 100;
+  if (
+    x == 0 &&
+    y == -1 &&
+    playerInfo[0].playerLife < playerInfo[0].playerMaxLife
+  ) {
+    playerInfo[0].playerLife = playerInfo[0].playerMaxLife;
     console.log(
-      `You have reached the healing well. The elves looks favourably to you and they have decided to heal your wounds.\nYour health is fully recovered. Health points: ${playerInfo[0].playerLife}`
+      `You have reached the secret healing well. The elves looks favourably to you and they have decided to heal your wounds.\nYour health is fully recovered. Health points: ${playerInfo[0].playerLife}`
     );
   }
 }
@@ -128,6 +132,12 @@ function enemyEncounter(enemyNum) {
         `\n\u2605\u2605\u2605  Victory! You have killed ${enemyInfo[enemyNum].name}.  \u2605\u2605\u2605`
       );
     }
+    if (playerInfo.playerLife <= 0) {
+      console.log(
+        `\n\u2605\u2605\u2605  You have been defeated by ${enemyInfo[enemyNum].name}.  \u2605\u2605\u2605`
+      );
+      process.exit();
+    }
   }
 }
 function finalBossEncounter() {
@@ -165,6 +175,12 @@ function finalBossEncounter() {
         enemyInfo[finalBoss].enemyLivingStatus - 1;
       console.log(
         `\n\u2605\u2605\u2605  Victory! You have killed ${enemyInfo[finalBoss].name}.  \u2605\u2605\u2605`
+      );
+      process.exit();
+    }
+    if (playerInfo.playerLife <= 0) {
+      console.log(
+        `\n\u2605\u2605\u2605  You have been defeated by ${enemyInfo[finalBoss].name}.  \u2605\u2605\u2605`
       );
       process.exit();
     }
