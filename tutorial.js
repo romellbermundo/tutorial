@@ -36,26 +36,12 @@ let enemyInfo = [
 let playerInfo = [
   { name: "Romell", playerAttack: 27, playerLife: 100, playerMaxLife: 100 },
 ];
-
-while (true) {
-  enemyLocations();
-  healingWell();
-  const playerAction = rl.question(undefined, {
-    hideEchoBack: true,
-    mask: "",
-  });
-  if (playerAction === "w") {
-    north();
-  } else if (playerAction === "s") {
-    south();
-  } else if (playerAction === "d") {
-    east();
-  } else if (playerAction === "a") {
-    west();
-  }
-  if (playerAction === "b") {
-    console.log("\u2694\u2694\u2694   Game Over   \u2694\u2694\u2694");
-    break;
+runGame();
+function runGame() {
+  while (true) {
+    enemyLocations();
+    healingWell();
+    direction();
   }
 }
 async function welcome() {
@@ -253,5 +239,23 @@ function west() {
     );
   } else {
     console.log(`Moving West. Your location is currently at (${x},${y})\n`);
+  }
+}
+function direction() {
+  const playerAction = rl.question(undefined, {
+    hideEchoBack: true,
+    mask: "",
+  });
+  if (playerAction === "w") {
+    north();
+  } else if (playerAction === "s") {
+    south();
+  } else if (playerAction === "d") {
+    east();
+  } else if (playerAction === "a") {
+    west();
+  }
+  if (playerAction === "b") {
+    console.log("\u2694\u2694\u2694   Game Over   \u2694\u2694\u2694");
   }
 }
